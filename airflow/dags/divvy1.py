@@ -57,6 +57,10 @@ with DAG(
         task_id="dbt_docs_generate",
         bash_command=f"cd {DBT_DIR} && dbt docs generate",
     )
+    dbt_run_reports = BashOperator(
+        task_id='dbt_run_reports',
+        bash_command=f"cd {DBT_DIR} && dbt run --select reports",
+    )
 
-    extract_load >> validate_bronze_task >> dbt_run_staging_intermediate >> dbt_snapshot >> dbt_run_marts >> dbt_test >> dbt_docs
+    extract_load >> validate_bronze_task >> dbt_run_staging_intermediate >> dbt_snapshot >> dbt_run_marts >>dbt_run_reports>> dbt_test >> dbt_docs
 

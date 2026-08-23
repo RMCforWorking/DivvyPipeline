@@ -14,8 +14,14 @@ select
     end_lng,
     date_diff('minute', started_at, ended_at) as trip_duration_in_minutes,
     {{ calcul_distanta_aprox('start_lat', 'start_lng', 'end_lat', 'end_lng') }} as distance_in_km,
-    {{ calcul_distanta_aprox('start_lat', 'start_lng', '41.8781', '-87.6298') }} as distance_from_center_to_start,
-    {{ calcul_distanta_aprox('41.8781', '-87.6298', 'end_lat', 'end_lng') }} as distance_from_center_to_end,
+    case
+        when start_lat is null or start_lng is null then null
+        else {{ calcul_distanta_aprox('start_lat', 'start_lng', '41.8781', '-87.6298') }}
+    end as distance_from_center_to_start,
+    case
+        when end_lat is null or end_lng is null then null
+        else {{ calcul_distanta_aprox('41.8781', '-87.6298', 'end_lat', 'end_lng') }}
+    end as distance_from_center_to_end,
     case
         when trip_duration_in_minutes>0
             then round(distance_in_km/(trip_duration_in_minutes/60.0),2)
