@@ -1,0 +1,7 @@
+sources:
+  - name: divvy
+    schema: bronze
+    tables:
+      - name: trips
+        meta:
+          external_location: "data/*-divvy-tripdata.parquet"

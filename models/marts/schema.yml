@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fact_trips
+    columns:
+      - name: ride_id
+        tests:
+          - unique
+          - not_null
+      - name: type_of_rider
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: ['member','casual']
+      - name: start_station_id
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - relationships:
+              to: ref('dim_station')
+              field: station_id
+              config:
+                severity: warn
+      - name: end_station_id
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - relationships:
+              to: ref('dim_station')
+              field: station_id
+              config:
+                severity: warn
+      - name: rideable_type
+        tests:
+          - accepted_values:
+              values: ['classic_bike','electric_bike']
+
+  - name: dim_station
+    columns:
+      - name: station_id
+        tests:
+          - not_null:
+              config:
+                severity: warn

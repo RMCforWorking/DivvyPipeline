@@ -1,0 +1,9 @@
+
+target/
+dbt_packages/
+logs/
+.env
+*.duckdb
+warehouse.duckdb
+dev.duckdb
+data/*.parquet
