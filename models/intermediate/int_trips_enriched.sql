@@ -23,10 +23,9 @@ select
         else {{ calcul_distanta_aprox('41.8781', '-87.6298', 'end_lat', 'end_lng') }}
     end as distance_from_center_to_end,
     case
-        when trip_duration_in_minutes>0
+        when trip_duration_in_minutes>0 and round(distance_in_km/(trip_duration_in_minutes/60.0),2) <=45
             then round(distance_in_km/(trip_duration_in_minutes/60.0),2)
         else null
     end as avrage_speed_kmh
 from {{ ref('stg_trips') }}
 where date_diff('minute', started_at, ended_at) >= 0
-and avrage_speed_kmh < 45

@@ -11,7 +11,7 @@ with arrivals as(
 departures as(
     select
         start_station_id as station_id,
-        end_station_name as station_name,
+        start_station_name as station_name,
         type_of_rider,
         count(*) as n_departures
     from {{ref('fact_trips')}}

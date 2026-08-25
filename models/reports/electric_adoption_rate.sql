@@ -16,6 +16,6 @@ select
     round(100.0*nr_casuals/total_trips,2) as percentage_of_casuals,
     lag(percentage_of_members) over(order by month) as last_months_members,
     lag(percentage_of_casuals) over(order by month) as last_months_casuals,
-    round(percentage_of_members-last_months_members,2) as percentaje_difference_between_types,
+    round(percentage_of_members-last_months_members,2) as percentaje_difference_between_types
 from monthly
 order by month
